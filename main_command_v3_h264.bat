@@ -11,12 +11,11 @@ ffmpeg -hwaccel cuda -i base_video.mp4 -i loop_video.mp4 -filter_complex "[1:v]f
 
 
 @REM Step 3: Render final video (New way) using yuv420p format
-ffmpeg -hwaccel cuda -i video_step_1.mp4 -i wave.mp4 -filter_complex "[1:v]scale=759:268,format=gbrp[wave_resized];[0:v]format=gbrp[base];[base][wave_resized]overlay=972:525[overlayed];[base][overlayed]blend=all_mode='lighten':all_opacity=1[blended];[blended]format=yuv420p[out_final_step_2]" -map "[out_final_step_2]" -c:v h264_nvenc -r 25 -color_primaries bt709 -color_trc bt709 -colorspace bt709 video_step_2.mp4
+ffmpeg -hwaccel cuda -i video_step_1.mp4 -i wave.mp4 -filter_complex "[1:v]scale=759:268,format=gbrp[wave_resized];[0:v]format=gbrp[base];[base][wave_resized]overlay=972:525[overlayed];[base][overlayed]blend=all_mode='lighten':all_opacity=1[blended];[blended]format=yuv420p[out_final_step_2]" -map "[out_final_step_2]" -c:v h264_nvenc -r 25 -color_primaries bt709 -color_trc bt709 -colorspace bt709 final_video.mp4
 
 
 @REM Delete intermediate files after Step 4
 del base_video.mp4
 del video_step_1.mp4
-
 
 endlocal
